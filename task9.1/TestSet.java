@@ -21,12 +21,54 @@ public class TestSet {
 
     }
 
+    @Test
+    public void negateTest1() {
+        assertTrue(s.isEmpty());
+    }
+
+    @Property
+    public void negateTest2(@ForAll int param) {
+        assertFalse(s.contains(param));
+    }
+    
+    @Test
+    public void unionOperation() {
+        assertTrue(s.add(2));
+        assertTrue(s.add(1));
+        Set<Integer> a = new HashSet<>(); 
+        a.addAll(Arrays.asList(new Integer[] {1, 3})); 
+        s.addAll(a); 
+        assertEquals(s, new HashSet<>(Arrays.asList(new Integer[] {1, 2, 3})));
+    }
+    
+    @Test
+    public void intersectionOperation() {
+        assertTrue(s.add(2));
+        assertTrue(s.add(1));
+        Set<Integer> a = new HashSet<>(); 
+        a.addAll(Arrays.asList(new Integer[] {1, 3})); 
+        s.retainAll(a); 
+        assertEquals(s, new HashSet<>(Arrays.asList(new Integer[] {1})));
+    }
+    
+    
+    @Test
+    public void differenceOperation() {
+        assertTrue(s.add(2));
+        assertTrue(s.add(1));
+        Set<Integer> a = new HashSet<>(); 
+        a.addAll(Arrays.asList(new Integer[] {1, 3})); 
+        s.removeAll(a); 
+        assertEquals(s, new HashSet<>(Arrays.asList(new Integer[] {2})));
+    }
+    
     @Property
     public void addPropertyAddRemove(@ForAll int param) {
         assertTrue(s.add(param));
         assertTrue(s.remove(param));
         assertTrue(s.isEmpty());
     }
+    
     
     @Test
     public void addRemoveAdd() {
